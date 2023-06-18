@@ -1,26 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class userTokenDto {
-  @ApiProperty({ example: '123', description: 'Unique user id' })
-  readonly id: number;
-
-  @ApiProperty({ example: '_foxxman_', description: 'Unique user login' })
-  readonly login: string;
-
-  @ApiProperty({ example: 'user@mail.com', description: 'Unique email' })
+  readonly _id: string;
   readonly email: string;
 
-  @ApiProperty({
-    example: 'false',
-    description: 'Did user activate his acount',
-  })
-  readonly isActivated: boolean;
-
-  @ApiProperty({
-    example: 'false',
-    description: 'Was user banned for smth',
-  })
-  readonly banned: boolean;
+  constructor(_id: string, email: string) {
+    this._id = _id;
+    this.email = email;
+  }
 }
 
-// export authUser
+export class refreshTokenDto {
+  @IsNotEmpty({ message: 'refresh token cant be empty' })
+  @IsString({ message: 'refresh token must be a string' })
+  readonly refreshToken: string;
+}

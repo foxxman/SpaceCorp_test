@@ -7,10 +7,11 @@ import {
 import { createUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
-import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/users.model';
-import { loginUserDto } from 'src/users/dto/login-user.dto';
-import { v4 } from 'uuid';
+import {
+  authResponseUserData,
+  loginUserDto,
+} from 'src/users/dto/login-user.dto';
 import { TokensService } from 'src/tokens/tokens.service';
 import authTokens from 'src/types/tokens';
 import { userTokenDto } from 'src/users/dto/token-user.dto';
@@ -21,30 +22,20 @@ export class AuthService {
     private usersService: UsersService,
     private tokensService: TokensService,
   ) {}
-  async registration(
-    dto: createUserDto,
-  ): Promise<{ user: User; tokens: authTokens }> {
+  async registration(dto: createUserDto) {
     const candidateEmail = await this.usersService.getUserByEmail(dto.email);
-    const candidateLogin = await this.usersService.getUserByLogin(dto.login);
 
     // check if login or email exists
     if (candidateEmail) {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }
-    if (candidateLogin) {
-      throw new HttpException('Login already exist', HttpStatus.BAD_REQUEST);
-    }
-    const hashPassword = await bcrypt.hash(dto.password, 5);
 
-    // link for email activation
-    const activationLink = v4();
+    const hashPassword = await bcrypt.hash(dto.password, 5);
 
     // creating user
     const user = await this.usersService.createUser({
       ...dto,
       password: hashPassword,
-      activationLink,
-      isActivated: true,
     });
 
     const tokens = await this.generateTokens(user);
@@ -53,32 +44,33 @@ export class AuthService {
 
     // return user and tokens
     return {
-      user,
+      user: {
+        _id: String(user._id),
+        email: user.email,
+      },
       tokens,
     };
   }
 
-  async login(dto: loginUserDto): Promise<{ user: User; tokens: authTokens }> {
-  
-
+  async login(dto: loginUserDto) {
     const user = await this.validateUser(dto);
     const tokens = await this.generateTokens(user);
 
     await this.tokensService.saveToken(user.id, tokens.refreshToken);
 
     return {
-      user,
+      user: {
+        _id: String(user._id),
+        email: user.email,
+      },
       tokens,
     };
   }
 
-  private async generateTokens(user: userTokenDto): Promise<authTokens> {
+  private async generateTokens(user: userTokenDto) {
     const payload = {
       email: user.email,
-      login: user.login,
-      id: user.id,
-      isActivated: user.isActivated,
-      banned: user.banned,
+      _id: user._id,
     };
 
     const tokens = await this.tokensService.generateTokens(payload);
@@ -86,9 +78,8 @@ export class AuthService {
     return tokens;
   }
 
-  private async validateUser(dto: loginUserDto): Promise<User> {
-
-    const user = await this.usersService.getUserByLogin(dto.login);
+  private async validateUser(dto: loginUserDto) {
+    const user = await this.usersService.getUserByEmail(dto.email);
     if (!user) throw new UnauthorizedException('Uncorrect login or password');
 
     const isPasswordsEqual = await bcrypt.compare(dto.password, user.password);
@@ -96,5 +87,38 @@ export class AuthService {
       throw new UnauthorizedException('Uncorrect login or password');
 
     return user;
+  }
+
+  async refresh(refreshToken: string) {
+    if (!refreshToken)
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+
+    // validate token
+    const userData = this.tokensService.validateRefreshToken(refreshToken);
+    // check that token exists
+    const tokenFromDB = await this.tokensService.findToken(refreshToken);
+
+    // Unaithorized if smth wrong
+    if (!userData || !tokenFromDB) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    }
+
+    const user = await this.usersService.getUserByEmail(userData.email);
+
+    if (user) {
+      // gets only the important fields we need
+      const userDto = new userTokenDto(user._id, user.email);
+      // will return refresh and access tokens
+      const tokens = await this.tokensService.generateTokens({ ...userDto });
+      // save only refresh
+      await this.tokensService.saveToken(userDto._id, tokens.refreshToken);
+
+      return { tokens, user: userDto };
+    } else {
+      throw new HttpException(
+        'Cant find the user by id in the token',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
