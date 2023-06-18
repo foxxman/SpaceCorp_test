@@ -4,6 +4,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TokensModule } from './tokens/tokens.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MoviesModule } from './movies/movies.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     AuthModule,
     UsersModule,
     TokensModule,
+    FilesModule,
+    MoviesModule,
   ],
   controllers: [],
   providers: [],
