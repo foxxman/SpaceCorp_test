@@ -177,7 +177,7 @@ You can use Postman or other tools to test next URL endpoints.
 
 **Request headers:**
 
-- Authorization: Bearer **access_token**
+- **Authorization** Bearer access_token
 
 ### Response
 
