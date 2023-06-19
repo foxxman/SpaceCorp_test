@@ -31,11 +31,11 @@ yarn start
 
 You can use Postman or other tools to test next URL endpoints.
 
-## Get list of Movies
-
-### Request
+## Get the list of Movies
 
 ![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
+
+### Request
 
 `GET /movies/`
 
@@ -51,3 +51,22 @@ You can use Postman or other tools to test next URL endpoints.
             "__v": 0
         }
     ]
+
+## Get the single movie object
+
+![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
+
+### Request
+
+`GET /movies/:id`
+
+### Response
+
+    {
+        "_id": "6490aa9793e5f0627e8445e3",
+        "title": "It",
+        "description": "very scary film",
+        "image": "dfb5c862-f784-4117-87e2-722e9dba0674.jpg",
+        "rating": 5,
+        "__v": 0
+    }
