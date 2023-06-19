@@ -58,6 +58,59 @@ You can use Postman or other tools to test next URL endpoints.
 
 **refreshToken** - token for refreshing access token
 
+## Authentication: Sign In
+
+### Request
+
+`POST /auth/login`
+
+**Request body:**
+
+    {
+        "email": "test@mail.com",
+        "password": "qwerty12345"
+    }
+
+### Response
+
+    {
+        "accessToken": "some_access_token",
+        "user": {
+            "email": "testxsxa2@gmail.comds",
+            "_id": "6490ba8c86db843c978c41ee"
+        }
+    }
+
+### Response cookies
+
+**refreshToken** - token for refreshing access token
+
+## **Authentication**: Refresh Access Token
+
+### Request
+
+`POST /auth/refresh`
+
+**Request body:**
+
+    {
+        "refreshToken": "refresh_token_from_auth_cookies"
+    }
+
+### Response
+
+    {
+        "accessToken": "some_access_token",
+        "user": {
+            "email": "testxsxa2@gmail.comds",
+            "_id": "6490ba8c86db843c978c41ee"
+        }
+    }
+
+### Response cookies
+
+**refreshToken** - token for refreshing access token
+
 ## Get the list of Movies
 
 ![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
