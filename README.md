@@ -27,7 +27,7 @@ yarn start:dev
 yarn start
 ```
 
-#REST API
+# REST API
 
 You can use Postman or other tools to test next URL endpoints.
 
@@ -35,9 +35,10 @@ You can use Postman or other tools to test next URL endpoints.
 
 ### Request
 
+![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
 `GET /movies/`
 
-### Response ![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
+### Response
 
     [
         {
