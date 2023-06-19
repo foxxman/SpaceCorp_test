@@ -3,8 +3,8 @@ import { MoviesController } from './movies.controller';
 import { MoviesService } from './movies.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MovieSchema } from './movies.model';
-import { FilesService } from 'src/files/files.service';
 import { FilesModule } from 'src/files/files.module';
+import { TokensModule } from 'src/tokens/tokens.module';
 
 @Module({
   controllers: [MoviesController],
@@ -12,6 +12,7 @@ import { FilesModule } from 'src/files/files.module';
   imports: [
     MongooseModule.forFeature([{ name: 'Movie', schema: MovieSchema }]),
     FilesModule,
+    TokensModule,
   ],
 })
 export class MoviesModule {}

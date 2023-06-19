@@ -9,12 +9,14 @@ import {
   Put,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { movieInfoDto, movieUpdateDto } from './dto/create-movie.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('movies')
 @UsePipes(
@@ -33,7 +35,7 @@ export class MoviesController {
     console.log(order);
     const movies = await this.moviesService.getAll();
 
-    if (!order) return movies;
+    if (!Number.isInteger(order)) return movies;
 
     // order = 1 - increase
     // order = 0 - not increase
@@ -49,22 +51,26 @@ export class MoviesController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('image'))
   async createMovie(@Body() dto: movieInfoDto, @UploadedFile() image: any) {
-    console.log(dto);
     const movie = await this.moviesService.createMovie(dto, image);
     return movie;
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor(''))
   async updateMovie(@Body() dto: movieUpdateDto, @Param('id') id: string) {
-    console.log(id, dto);
-
     const movie = this.moviesService.updateMovie(id, dto);
     return movie;
   }
 
   @Delete(':id')
-  async removeMovie() {}
+  @UseGuards(JwtAuthGuard)
+  async removeMovie(@Param('id') id: string) {
+    const movie = this.moviesService.removeMovie(id);
+
+    return movie;
+  }
 }
