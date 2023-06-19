@@ -12,7 +12,7 @@ import { FilesModule } from './files/files.module';
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot(String(process.env.MONGO_URL)),
     AuthModule,
     UsersModule,
     TokensModule,
