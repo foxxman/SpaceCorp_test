@@ -31,6 +31,33 @@ yarn start
 
 You can use Postman or other tools to test next URL endpoints.
 
+## Authentication: Sign Up
+
+### Request
+
+`POST /auth/registration`
+
+**Request body:**
+
+    {
+        "email": "test@mail.com",
+        "password": "qwerty12345"
+    }
+
+### Response
+
+    {
+        "accessToken": "some_access_token",
+        "user": {
+            "email": "testxsxa2@gmail.comds",
+            "_id": "6490ba8c86db843c978c41ee"
+        }
+    }
+
+### Response cookies
+
+**refreshToken** - token for refreshing access token
+
 ## Get the list of Movies
 
 ![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
