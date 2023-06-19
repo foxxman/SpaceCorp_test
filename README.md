@@ -85,7 +85,7 @@ You can use Postman or other tools to test next URL endpoints.
 
 **refreshToken** - token for refreshing access token
 
-## **Authentication**: Refresh Access Token
+## Authentication: Refresh Access Token
 
 ### Request
 
@@ -121,7 +121,7 @@ You can use Postman or other tools to test next URL endpoints.
 
 ### Query parameters:
 
-**order** - for sorting movies:
+**order** - (optional) for sorting movies:
 
 - 0 - descending sort
 - 1 - ascending sort
@@ -155,5 +155,37 @@ You can use Postman or other tools to test next URL endpoints.
         "description": "very scary film",
         "image": "dfb5c862-f784-4117-87e2-722e9dba0674.jpg",
         "rating": 5,
+        "__v": 0
+    }
+
+## Create new movie
+
+![Badge](https://img.shields.io/badge/Access-Private-brightred)
+
+### Request
+
+`POST /movies/`
+
+**Request body:**
+
+    {
+        "title": "IT",
+        "description": "very scary film",
+        "rating": 10,
+        "image": thumbnaile.jpg,
+    }
+
+**Request headers:**
+
+- Authorization: Bearer **access_token**
+
+### Response
+
+    {
+        "_id": "6490aa9793e5f0627e8445e3",
+        "title": "It",
+        "description": "very scary film",
+        "image": "dfb5c862-f784-4117-87e2-722e9dba0674.jpg",
+        "rating": 10,
         "__v": 0
     }
