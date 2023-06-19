@@ -41,7 +41,7 @@ You can use Postman or other tools to test next URL endpoints.
 
 Query parameters:
 
-1. **order** - for sorting movies:
+**order** - for sorting movies:
 
 - 0 - descending sort
 - 1 - ascending sort
