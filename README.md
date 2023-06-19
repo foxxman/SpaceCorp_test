@@ -189,3 +189,35 @@ You can use Postman or other tools to test next URL endpoints.
         "rating": 10,
         "__v": 0
     }
+
+## Edit movie
+
+![Badge](https://img.shields.io/badge/Access-Private-red)
+
+### Request
+
+`POST /movies/:id`
+
+**Request body (all fields are optional):**
+
+    {
+        "title": "Barbie",
+        "description": "very fanny film",
+        "image": "dfb5c862-f784-4117-87e2-722e9dba0674.jpg",
+        "rating": 5,
+    }
+
+**Request headers:**
+
+- **Authorization** Bearer access_token
+
+### Response
+
+    {
+        "_id": "6490aa9793e5f0627e8445e3",
+        "title": "Barbie",
+        "description": "very fanny film",
+        "image": "dfb5c862-f784-4117-87e2-722e9dba0674.jpg",
+        "rating": 5,
+        "__v": 0
+    }
