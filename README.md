@@ -36,6 +36,7 @@ You can use Postman or other tools to test next URL endpoints.
 ### Request
 
 ![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
+
 `GET /movies/`
 
 ### Response
