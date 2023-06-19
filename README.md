@@ -39,6 +39,13 @@ You can use Postman or other tools to test next URL endpoints.
 
 `GET /movies/`
 
+Query parameters:
+
+    * **order** - for sorting movies:
+
+        + 0 - descending sort
+        + 1 - ascending sort
+
 ### Response
 
     [
