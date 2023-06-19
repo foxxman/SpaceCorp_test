@@ -35,12 +35,13 @@ export class MoviesController {
     console.log(order);
     const movies = await this.moviesService.getAll();
 
-    if (!Number.isInteger(order)) return movies;
+    if (!Number.isInteger(order) || Number(order) !== 0 || Number(order) !== 1)
+      return movies;
 
     // order = 1 - increase
     // order = 0 - not increase
     return movies.sort((a, b) =>
-      order == 1 ? a.rating - b.rating : b.rating - a.rating,
+      Number(order) === 1 ? a.rating - b.rating : b.rating - a.rating,
     );
   }
 
@@ -60,9 +61,13 @@ export class MoviesController {
 
   @Put(':id')
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FileInterceptor(''))
-  async updateMovie(@Body() dto: movieUpdateDto, @Param('id') id: string) {
-    const movie = this.moviesService.updateMovie(id, dto);
+  @UseInterceptors(FileInterceptor('image'))
+  async updateMovie(
+    @Body() dto: movieUpdateDto,
+    @UploadedFile() image: any,
+    @Param('id') id: string,
+  ) {
+    const movie = this.moviesService.updateMovie(id, dto, image);
     return movie;
   }
 
@@ -70,7 +75,6 @@ export class MoviesController {
   @UseGuards(JwtAuthGuard)
   async removeMovie(@Param('id') id: string) {
     const movie = this.moviesService.removeMovie(id);
-
     return movie;
   }
 }

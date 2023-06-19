@@ -57,11 +57,18 @@ export class MoviesService {
     }
   }
 
-  async updateMovie(id: string, data: movieUpdateDto) {
+  async updateMovie(id: string, data: movieUpdateDto, image: any) {
+    let fileName: null | string = null;
+    const movie = await this.moviesRepository.findById(id);
+
     try {
+      if (image) {
+        await this.filesService.removeFile(movie.image);
+        fileName = await this.filesService.createFile(image);
+      }
       const updatedMovie = await this.moviesRepository.findByIdAndUpdate(
         id,
-        data,
+        { ...data, image: image ? fileName : movie.image },
         { new: true },
       );
 

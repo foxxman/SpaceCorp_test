@@ -14,10 +14,9 @@ export class FilesService {
       if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath, { recursive: true });
       }
-      const fullPath = path.join(filePath, fileName);
 
-      fs.writeFileSync(fullPath, file.buffer);
-      return fullPath;
+      fs.writeFileSync(path.join(filePath, fileName), file.buffer);
+      return fileName;
     } catch (error) {
       throw new HttpException(
         'File recording error ',
@@ -29,6 +28,7 @@ export class FilesService {
   async removeFile(fileName: string) {
     const filePath = path.resolve(__dirname, '..', 'static');
     const fullPath = path.join(filePath, fileName);
+
     if (fs.existsSync(fullPath))
       fs.unlink(fullPath, (err) => {
         if (err) {
