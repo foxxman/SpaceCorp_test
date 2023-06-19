@@ -4,17 +4,23 @@ This is the backend component of the Movies Site, a web application for browsing
 
 ## Installation
 
-Don't forget to create ".env" or ".development.env" files like the ".example.env" for enviroment variables.
+Don't forget to create **.env** or **.development.env** files like the **.example.env** for enviroment variables.
 
-Use the package manager yarn to install project.
+Use the **yarn** package manager to install and run this project.
 
-Development mode:
+Install:
+
+```bash
+yarn
+```
+
+Running in the development mode:
 
 ```bash
 yarn start:dev
 ```
 
-Production mode:
+Running in the production mode:
 
 ```bash
 yarn start:dev
