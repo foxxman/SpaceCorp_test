@@ -1,6 +1,7 @@
 # Movies Site Backend
 
-This is the backend component of the Movies Site, a web application for browsing and searching movies.
+This is the backend component of the Movies Site, a web application for creating, udating and browsing movies.
+Site use the jwt-tokens authentication for protected endpoints.
 
 ## Installation
 
@@ -27,3 +28,8 @@ yarn start:dev
 ```
 
 ## Usage
+
+You can use Postman or othet tools to use next URL endpoints.
+
+### Public endpoints
+
