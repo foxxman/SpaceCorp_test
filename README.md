@@ -160,7 +160,7 @@ You can use Postman or other tools to test next URL endpoints.
 
 ## Create new movie
 
-![Badge](https://img.shields.io/badge/Access-Private-brightred)
+![Badge](https://img.shields.io/badge/Access-Private-red)
 
 ### Request
 
