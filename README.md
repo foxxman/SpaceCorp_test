@@ -158,6 +158,14 @@ You can use Postman or other tools to test next URL endpoints.
         "__v": 0
     }
 
+## Get the movie image
+
+![Badge](https://img.shields.io/badge/Access-Public-brightgreen)
+
+### Request
+
+    `GET /dist/static/image_name.jpg`
+
 ## Create new movie
 
 ![Badge](https://img.shields.io/badge/Access-Private-red)
@@ -244,8 +252,3 @@ You can use Postman or other tools to test next URL endpoints.
         "rating": 5,
         "__v": 0
     }
-### Getting the movie image
-
-### Request
-
-    `GET /dist/static/image_name.jpg`
