@@ -164,11 +164,11 @@ You can use Postman or other tools to test next URL endpoints.
 
 ### Request
 
-    `GET /movies/image/:imageName`
+`GET /movies/image/:imageName`
 
 ### Response headers
 
-    `Content-Type': 'image/jpeg'`
+`'Content-Type': 'image/jpeg'`
 
 ## Create new movie
 
