@@ -59,9 +59,10 @@ export class MoviesService {
 
   async updateMovie(id: string, data: movieUpdateDto, image: any) {
     let fileName: null | string = null;
-    const movie = await this.moviesRepository.findById(id);
 
     try {
+      const movie = await this.moviesRepository.findById(id);
+
       if (image) {
         await this.filesService.removeFile(movie.image);
         fileName = await this.filesService.createFile(image);
@@ -75,8 +76,8 @@ export class MoviesService {
       return updatedMovie;
     } catch (error) {
       throw new HttpException(
-        error.message || 'Updating error',
-        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        'There is no any movies with this id',
+        HttpStatus.NOT_FOUND,
       );
     }
   }

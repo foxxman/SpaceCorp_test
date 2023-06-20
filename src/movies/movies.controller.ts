@@ -47,10 +47,9 @@ export class MoviesController {
 
   @Get()
   async getAllMovies(@Query('order') order: number) {
-    console.log(order);
     const movies = await this.moviesService.getAll();
 
-    if (!Number.isInteger(order) || Number(order) !== 0 || Number(order) !== 1)
+    if (!Number.isInteger(order) || (Number(order) !== 0 && Number(order) !== 1))
       return movies;
 
     // order = 1 - increase
@@ -61,7 +60,7 @@ export class MoviesController {
   }
 
   @Get(':id')
-  async getMovie(@Param('idreturn fileBuffe') id: string) {
+  async getMovie(@Param('id') id: string) {
     const movie = await this.moviesService.getMovieById(id);
     return movie;
   }
