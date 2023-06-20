@@ -164,7 +164,11 @@ You can use Postman or other tools to test next URL endpoints.
 
 ### Request
 
-    `GET /dist/static/image_name.jpg`
+    `GET /movies/image/:imageName`
+
+### Response headers
+
+    `Content-Type': 'image/jpeg'`
 
 ## Create new movie
 

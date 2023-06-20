@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -17,6 +18,8 @@ import {
 import { movieInfoDto, movieUpdateDto } from './dto/create-movie.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FilesService } from 'src/files/files.service';
+import { Response } from 'express';
 
 @Controller('movies')
 @UsePipes(
@@ -28,7 +31,19 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
   }),
 )
 export class MoviesController {
-  constructor(private moviesService: MoviesService) {}
+  constructor(
+    private moviesService: MoviesService,
+    private filesService: FilesService,
+  ) {}
+
+  @Get('/image/:imageName')
+  async getImage(@Param('imageName') imageName: string, @Res() res: Response) {
+    const imageStream = await this.filesService.getFile(imageName);
+    res.setHeader('Content-Type', 'image/jpeg');
+
+    // Pipe the image stream to the response
+    imageStream.pipe(res);
+  }
 
   @Get()
   async getAllMovies(@Query('order') order: number) {
@@ -46,7 +61,7 @@ export class MoviesController {
   }
 
   @Get(':id')
-  async getMovie(@Param('id') id: string) {
+  async getMovie(@Param('idreturn fileBuffe') id: string) {
     const movie = await this.moviesService.getMovieById(id);
     return movie;
   }

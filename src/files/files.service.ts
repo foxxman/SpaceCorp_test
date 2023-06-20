@@ -41,4 +41,16 @@ export class FilesService {
         }
       });
   }
+
+  async getFile(fileName: string) {
+    const filePath = path.resolve(__dirname, '..', 'static');
+    const fullPath = path.join(filePath, fileName);
+    if (fs.existsSync(fullPath)) {
+      const fileBuffer = fs.createReadStream(fullPath);
+
+      return fileBuffer;
+    } else {
+      throw new HttpException('Image not found', HttpStatus.BAD_REQUEST);
+    }
+  }
 }
