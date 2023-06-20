@@ -196,7 +196,7 @@ You can use Postman or other tools to test next URL endpoints.
 
 ### Request
 
-`POST /movies/:id`
+`PUT /movies/:id`
 
 **Request body (all fields are optional):**
 
@@ -221,3 +221,31 @@ You can use Postman or other tools to test next URL endpoints.
         "rating": 5,
         "__v": 0
     }
+
+## Remove movie
+
+![Badge](https://img.shields.io/badge/Access-Private-red)
+
+### Request
+
+`DELETE /movies/:id`
+
+**Request headers:**
+
+- **Authorization** Bearer access_token
+
+### Response
+
+    {
+        "_id": "6490aa9793e5f0627e8445e3",
+        "title": "Barbie",
+        "description": "very fanny film",
+        "image": "dfb5c862-f784-4117-87e2-722e9dba0674.jpg",
+        "rating": 5,
+        "__v": 0
+    }
+### Getting the movie image
+
+### Request
+
+    `GET /dist/static/image_name.jpg`
